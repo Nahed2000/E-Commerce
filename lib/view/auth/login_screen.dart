@@ -80,7 +80,7 @@ class LoginScreen extends GetWidget<AuthViewModel> {
               ),
               const SizedBox(height: 40),
               CustomButtonSocial(
-                onPressed: (){},
+                onPressed: ()=>controller.facebookSignInMethode(),
                 text: 'Sign In with FaceBook',
                 imageName: 'assets/images/Icon_Facebook.png',
               ),
