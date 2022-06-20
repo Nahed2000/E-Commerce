@@ -1,4 +1,5 @@
 import 'package:ecommerce/utilti/helper.dart';
+import 'package:ecommerce/view/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialBinding: Binding(),
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home:  const ControlView(),
     );
   }
 }
