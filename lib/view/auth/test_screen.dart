@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/auth_model.dart';
+import '../../core/view_model/auth_model.dart';
+
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);

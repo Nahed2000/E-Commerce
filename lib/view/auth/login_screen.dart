@@ -1,13 +1,13 @@
 import 'package:ecommerce/constance.dart';
-import 'package:ecommerce/model/auth_model.dart';
 import 'package:ecommerce/view/auth/register_view.dart';
-import 'package:ecommerce/view/auth/test_screen.dart';
 import 'package:ecommerce/view/widget/custom_bottun.dart';
 import 'package:ecommerce/view/widget/custom_button_social.dart';
 import 'package:ecommerce/view/widget/custom_form_field.dart';
 import 'package:ecommerce/view/widget/custome_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../core/view_model/auth_model.dart';
 
 class LoginView extends GetWidget<AuthViewModel> {
   LoginView({Key? key}) : super(key: key);

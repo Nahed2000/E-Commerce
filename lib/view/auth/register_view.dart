@@ -1,12 +1,10 @@
 
 
-import 'package:ecommerce/model/auth_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../constance.dart';
+import '../../core/view_model/auth_model.dart';
 import '../widget/custom_bottun.dart';
-import '../widget/custom_button_social.dart';
 import '../widget/custom_form_field.dart';
 import '../widget/custome_text.dart';
 
