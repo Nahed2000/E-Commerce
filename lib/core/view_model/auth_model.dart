@@ -1,3 +1,5 @@
+import 'package:ecommerce/model/user_model.dart';
+import 'package:ecommerce/service/firesrore_user.dart';
 import 'package:ecommerce/view/auth/test_screen.dart';
 import 'package:ecommerce/view/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +16,7 @@ class AuthViewModel extends GetxController {
 
   String? password;
 
-  String? name;
+  String? nameUser;
 
   final Rxn<User> _user = Rxn<User>();
 
@@ -65,7 +67,7 @@ class AuthViewModel extends GetxController {
   Future<void> signInWithEmailAndPassword() async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email??'test', password: password??'test');
+          email: email ?? 'test', password: password ?? 'test');
       Get.offAll(const HomeScreen());
       print('sign in success');
     } catch (e) {
@@ -76,10 +78,21 @@ class AuthViewModel extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+
   Future<void> createAccountWithEmailAndPassword() async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email??'test', password: password??'test');
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(
+              email: email ?? 'test', password: password ?? 'test')
+          .then((user)async {
+        UserModel userModel = UserModel(
+          userId: user.user!.uid,
+          email: user.user!.email,
+          name: nameUser,
+          pic: '',
+        );
+        await FireStoreUser().addToFireStore(userModel);
+      });
       Get.offAll(const HomeScreen());
       print('register in success');
     } catch (e) {

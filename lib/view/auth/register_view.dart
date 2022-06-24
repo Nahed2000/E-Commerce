@@ -39,7 +39,7 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   text: 'Name',
                   hint: 'Enter Your Name .!',
                   onSaved: (value) {
-                    controller.name = value!;
+                    controller.nameUser = value!;
                   },
                   validator: (value) {
                     if (value == null) {
