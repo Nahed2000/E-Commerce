@@ -3,7 +3,7 @@ import 'package:ecommerce/core/view_model/controller_view_model.dart';
 import 'package:ecommerce/core/view_model/home_view_model.dart';
 
 import 'package:ecommerce/view/widget/custome_text.dart';
-import 'package:ecommerce/view/widget/details.dart';
+import 'package:ecommerce/view/details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
