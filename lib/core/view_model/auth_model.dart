@@ -50,7 +50,10 @@ class AuthViewModel extends GetxController {
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
-    await _firebaseAuth.signInWithCredential(credential);
+    await _firebaseAuth.signInWithCredential(credential).then((user) async {
+      saveUser(user);
+      Get.offAll(const HomeScreen());
+    });
   }
 
   Future<void> facebookSignInMethode() async {
@@ -60,7 +63,9 @@ class AuthViewModel extends GetxController {
     if (result.status == FacebookLoginStatus.success) {
       final AuthCredential credential =
           FacebookAuthProvider.credential(accessToken);
-      await _firebaseAuth.signInWithCredential(credential);
+      await _firebaseAuth.signInWithCredential(credential).then((user) async{
+saveUser(user);
+      });
     }
   }
 
@@ -84,14 +89,8 @@ class AuthViewModel extends GetxController {
       await _firebaseAuth
           .createUserWithEmailAndPassword(
               email: email ?? 'test', password: password ?? 'test')
-          .then((user)async {
-        UserModel userModel = UserModel(
-          userId: user.user!.uid,
-          email: user.user!.email,
-          name: nameUser,
-          pic: '',
-        );
-        await FireStoreUser().addToFireStore(userModel);
+          .then((user) async {
+       saveUser(user);
       });
       Get.offAll(const HomeScreen());
       print('register in success');
@@ -102,5 +101,15 @@ class AuthViewModel extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red);
     }
+  }
+  void saveUser(UserCredential user)async{
+    await FireStoreUser().addToFireStore(
+      UserModel(
+        userId: user.user!.uid,
+        email: user.user!.email,
+        name: nameUser ?? user.user!.displayName,
+        pic: '',
+      ),
+    );
   }
 }
