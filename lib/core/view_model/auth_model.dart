@@ -52,7 +52,7 @@ class AuthViewModel extends GetxController {
     );
     await _firebaseAuth.signInWithCredential(credential).then((user) async {
       saveUser(user);
-      Get.offAll(const HomeScreen());
+      Get.offAll( HomeScreen());
     });
   }
 
@@ -73,7 +73,7 @@ saveUser(user);
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email ?? 'test', password: password ?? 'test');
-      Get.offAll(const HomeScreen());
+      Get.offAll( HomeScreen());
       print('sign in success');
     } catch (e) {
       print('we error');
@@ -92,7 +92,7 @@ saveUser(user);
           .then((user) async {
        saveUser(user);
       });
-      Get.offAll(const HomeScreen());
+      Get.offAll( HomeScreen());
       print('register in success');
     } catch (e) {
       print('we error');
