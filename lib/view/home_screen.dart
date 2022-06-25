@@ -3,12 +3,14 @@ import 'package:ecommerce/core/view_model/controller_view_model.dart';
 import 'package:ecommerce/core/view_model/home_view_model.dart';
 
 import 'package:ecommerce/view/widget/custome_text.dart';
+import 'package:ecommerce/view/widget/details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   // List<String> names = [
   //   'men',
   //   's',
@@ -22,8 +24,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
+      init: HomeViewModel(),
       builder: (controller) => controller.loadingValue
-          ? const Center(child:  CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
           : Scaffold(
               backgroundColor: Colors.white,
               body: Container(
@@ -63,40 +68,45 @@ class HomeScreen extends StatelessWidget {
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.grey.shade100),
-                    child: SizedBox(
-                      height: 220,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: Image.network(
-                        controller.productList[index].image ?? '',
-                        fit: BoxFit.fill,
+            return GestureDetector(
+              onTap: () => Get.to(
+                DetailsScreen(productModel: controller.productList[index]),
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.grey.shade100),
+                      child: SizedBox(
+                        height: 220,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Image.network(
+                          controller.productList[index].image ?? '',
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  CustomText(
-                      text: controller.productList[index].name ?? '',
-                      fontSize: 18),
-                  const SizedBox(height: 3),
-                  const CustomText(
-                    text: 'Tag Heuer',
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(height: 3),
-                  CustomText(
-                    text: controller.productList[index].price ?? '',
-                    fontSize: 18,
-                    color: primaryColor,
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    CustomText(
+                        text: controller.productList[index].name ?? '',
+                        fontSize: 18),
+                    const SizedBox(height: 3),
+                    CustomText(
+                      text: controller.productList[index].description ?? '',
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(height: 3),
+                    CustomText(
+                      text: '${controller.productList[index].price} \$',
+                      fontSize: 18,
+                      color: primaryColor,
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -111,7 +121,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget categoriesList() {
     return GetBuilder<HomeViewModel>(
       init: HomeViewModel(),

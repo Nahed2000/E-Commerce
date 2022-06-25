@@ -8,10 +8,12 @@ class CustomButton extends StatelessWidget {
       {Key? key,
       required this.text,
       required this.height,
+       this.weight = double.infinity,
       required this.onPressed})
       : super(key: key);
   final String text;
   final double height;
+  final double weight;
   final void Function() onPressed;
 
   @override
@@ -28,7 +30,7 @@ class CustomButton extends StatelessWidget {
           primary: primaryColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          minimumSize: Size(double.infinity, height)),
+          minimumSize: Size(weight, height)),
     );
   }
 }

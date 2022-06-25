@@ -1,8 +1,11 @@
+import 'package:ecommerce/utilti/exn.dart';
+import 'package:flutter/material.dart';
+
 class ProductModel {
   String? name;
   String? image;
   String? description;
-  String? color;
+  Color? color;
   String? sized;
   String? price;
 
@@ -19,7 +22,7 @@ class ProductModel {
     name = map['name'];
     image = map['image'];
     description = map['description'];
-    color = map['color'];
+    color = HexColor.fromHex(map['color']);
     sized = map['sized'];
     price = map['price'];
   }

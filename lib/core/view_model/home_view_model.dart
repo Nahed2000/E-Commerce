@@ -10,15 +10,10 @@ class HomeViewModel extends GetxController {
 
   final CollectionReference collectionReferenceProduct =
       FirebaseFirestore.instance.collection('Product');
-  bool _loadingValue = true;
+  bool loadingValue = true;
 
-  bool get loadingValue => _loadingValue;
-  final List<CategoriesModel> _categoriesList = <CategoriesModel>[];
-  final List<ProductModel> _productList = <ProductModel>[];
-
-  List<CategoriesModel> get categoriesList => _categoriesList;
-
-  List<ProductModel> get productList => _productList;
+  final List<CategoriesModel> categoriesList = <CategoriesModel>[];
+  final List<ProductModel> productList = <ProductModel>[];
 
   HomeViewModel() {
     getCategoriesData();
@@ -26,27 +21,26 @@ class HomeViewModel extends GetxController {
   }
 
   getCategoriesData() async {
-    _loadingValue = true;
+    loadingValue = true;
     await collectionReferenceCategories.get().then((value) {
       for (int i = 0; i < value.docs.length; i++) {
-        _categoriesList.add(CategoriesModel.fromJson(
+        categoriesList.add(CategoriesModel.fromJson(
             value.docs[i].data() as Map<String, dynamic>));
       }
-      _loadingValue = false;
+      loadingValue = false;
       update();
     });
   }
 
   getProductData() async {
-    _loadingValue = true;
+    loadingValue = true;
     await collectionReferenceProduct.get().then((value) {
       for (int i = 0; i < value.docs.length; i++) {
-        _productList.add(ProductModel.fromJson(
+        productList.add(ProductModel.fromJson(
             value.docs[i].data() as Map<String, dynamic>));
         print(value);
       }
-      _loadingValue = false;
-
+      loadingValue = false;
       update();
     });
   }
