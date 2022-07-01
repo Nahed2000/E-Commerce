@@ -1,17 +1,26 @@
 import 'package:ecommerce/constance.dart';
+import 'package:ecommerce/database/controller/db_controller.dart';
 import 'package:ecommerce/model/product_model.dart';
 import 'package:ecommerce/view/widget/custom_bottun.dart';
 import 'package:ecommerce/view/widget/custome_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class DetailsScreen extends StatelessWidget {
+import '../core/view_model/cart_view_model.dart';
+import '../model/cart_product_model.dart';
+
+class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
     required this.productModel,
     Key? key,
   }) : super(key: key);
   final ProductModel productModel;
 
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +35,7 @@ class DetailsScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 300,
                 child: Image.network(
-                  productModel.image ?? '',
+                  widget.productModel.image ?? '',
                   fit: BoxFit.fill,
                 ),
               ),
@@ -34,7 +43,7 @@ class DetailsScreen extends StatelessWidget {
               Column(
                 children: [
                   CustomText(
-                    text: productModel.name ?? '',
+                    text: widget.productModel.name ?? '',
                     fontSize: 26,
                   ),
                   const SizedBox(height: 15),
@@ -53,7 +62,8 @@ class DetailsScreen extends StatelessWidget {
                           children: [
                             const CustomText(text: 'Size', fontSize: 14),
                             CustomText(
-                                text: productModel.sized ?? '', fontSize: 14),
+                                text: widget.productModel.sized ?? '',
+                                fontSize: 14),
                           ],
                         ),
                       ),
@@ -72,7 +82,7 @@ class DetailsScreen extends StatelessWidget {
                               width: 30,
                               height: 20,
                               decoration: BoxDecoration(
-                                color: productModel.color,
+                                color: widget.productModel.color,
                                 border: Border.all(color: Colors.grey.shade100),
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -86,7 +96,7 @@ class DetailsScreen extends StatelessWidget {
                   const CustomText(text: 'Details', fontSize: 18),
                   const SizedBox(height: 20),
                   CustomText(
-                    text: productModel.description ?? '',
+                    text: widget.productModel.description ?? '',
                     fontSize: 14,
                     maxLine: 15,
                     height: 2,
@@ -101,17 +111,44 @@ class DetailsScreen extends StatelessWidget {
                           const CustomText(text: 'PRICE', fontSize: 16),
                           const SizedBox(height: 5),
                           CustomText(
-                            text: '\$${productModel.price}',
+                            text: '\$${widget.productModel.price}',
                             fontSize: 22,
                             color: primaryColor,
                           )
                         ],
                       ),
-                      CustomButton(
-                        text: 'Add',
-                        height: 50,
-                        onPressed: () {},
-                        weight: 150,
+                      GetBuilder<CartViewModel>(
+                        init: CartViewModel(),
+                        builder: (controller) => Container(
+                          padding: const EdgeInsets.all(20),
+                          height: 100,
+                          width: 180,
+                          child: CustomButton(
+                            text: 'Add',
+                            height: 50,
+                            onPressed: () async {
+                              print('weeeeeeee');
+                              await controller.addProduct(
+                                model: CartProductModel(
+                                  image: widget.productModel.image,
+                                  name: widget.productModel.name,
+                                  price: widget.productModel.price,
+                                  quantity: 1,
+                                ),
+                              );
+                              print('add task ${controller.cartProductModel.length}');
+                              print(
+                                  'product image is${widget.productModel.image}');
+                              print(
+                                  'product name is${widget.productModel.name}');
+                              print(
+                                  'product price is${widget.productModel.price}');
+                              print(' quantity is : 1');
+                              print('we021');
+                            },
+                            weight: 150,
+                          ),
+                        ),
                       )
                     ],
                   )

@@ -3,6 +3,7 @@ import 'package:ecommerce/core/view_model/home_view_model.dart';
 import 'package:get/get.dart';
 
 import '../core/view_model/auth_model.dart';
+import '../core/view_model/cart_view_model.dart';
 
 class Binding extends Bindings{
   @override
@@ -10,6 +11,7 @@ class Binding extends Bindings{
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => ControllerViewModel());
     Get.lazyPut(() => HomeViewModel());
+    Get.lazyPut(() => CartViewModel());
   }
 
 }

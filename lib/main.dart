@@ -1,3 +1,4 @@
+import 'package:ecommerce/database/controller/db_controller.dart';
 import 'package:ecommerce/utilti/helper.dart';
 import 'package:ecommerce/view/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import 'view/auth/login_screen.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DbController.db.initDatabase();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
